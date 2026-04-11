@@ -1,4 +1,6 @@
 from django.http import JsonResponse
+from django.contrib.auth import logout
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -35,3 +37,9 @@ def login_user(request):
                 "status": "error",
                 "message": str(e)
             }, status=500)
+
+
+def logout_user(request):
+    logout(request)  # terminate session
+    data = {"userName": ""}
+    return JsonResponse(data)
