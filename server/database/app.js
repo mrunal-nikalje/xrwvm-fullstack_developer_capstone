@@ -1,3 +1,5 @@
+const Dealership = require('./dealership');
+const Review = require('./review');
 const express = require('express');
 const mongoose = require('mongoose');
 const fs = require('fs');
@@ -58,17 +60,34 @@ app.get('/fetchReviews/dealer/:id', async (req, res) => {
 
 // Express route to fetch all dealerships
 app.get('/fetchDealers', async (req, res) => {
-//Write your code here
+    try {
+        const dealers = await Dealership.find({});
+        res.json(dealers);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // Express route to fetch Dealers by a particular state
 app.get('/fetchDealers/:state', async (req, res) => {
-//Write your code here
+    try {
+        const state = req.params.state;
+        const dealers = await Dealership.find({ state: state });
+        res.json(dealers);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // Express route to fetch dealer by a particular id
 app.get('/fetchDealer/:id', async (req, res) => {
-//Write your code here
+    try {
+        const id = req.params.id;
+        const dealer = await Dealership.findOne({ id: parseInt(id) });
+        res.json(dealer);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 //Express route to insert review
