@@ -10,10 +10,11 @@ app_name = 'djangoapp'
 urlpatterns = [
     # path for registration (add later if needed)
 
-    # path for login
+   
     path('login', views.login_user, name='login'),
     path('logout', views.logout_user, name='logout'),
-
+    path('get_cars', views.get_cars, name='getcars'),
+    
     # path for dealer reviews view (add later)
 
     # path for add a review view (add later)

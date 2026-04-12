@@ -3,9 +3,37 @@
 # from django.db import models
 # from django.utils.timezone import now
 # from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.db import models
 
 # Create your models here.
+
+
+class CarMake(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
+class CarModel(models.Model):
+    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
+    
+    DEALER_TYPE = [
+        ('Sedan', 'Sedan'),
+        ('SUV', 'SUV'),
+        ('Wagon', 'Wagon'),
+    ]
+
+    name = models.CharField(max_length=100)
+    dealer_id = models.IntegerField()
+    type = models.CharField(max_length=10, choices=DEALER_TYPE)
+    year = models.IntegerField()
+
+    def __str__(self):
+        return self.name + " - " + self.car_make.name
+
+
 
 # <HINT> Create a Car Make model `class CarMake(models.Model)`:
 # - Name
