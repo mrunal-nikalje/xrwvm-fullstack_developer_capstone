@@ -14,8 +14,11 @@ urlpatterns = [
     path('login', views.login_user, name='login'),
     path('logout', views.logout_user, name='logout'),
     path('get_cars', views.get_cars, name='getcars'),
-    
-    # path for dealer reviews view (add later)
+    path('get_dealers', views.get_dealerships),
 
-    # path for add a review view (add later)
+    path('get_dealers/<str:state>', views.get_dealerships),
+    path('dealer/<int:dealer_id>', views.get_dealer_details),
+    path('reviews/<int:dealer_id>', views.get_dealer_reviews),
+    path('add_review', views.add_review),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
