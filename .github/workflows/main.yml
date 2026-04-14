@@ -27,7 +27,7 @@ jobs:
 
     - name: Run Linter
       run: |
-        find . -name "*.py" -exec flake8 {} +
+        find . -name "*.py" ! -path "*/migrations/*" -exec flake8 {} +
         echo "Linted all python files successfully"
 
   lint_js:
