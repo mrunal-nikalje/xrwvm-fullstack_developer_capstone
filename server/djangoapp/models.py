@@ -18,7 +18,7 @@ class CarMake(models.Model):
 
 class CarModel(models.Model):
     car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
-    
+
     DEALER_TYPE = [
         ('Sedan', 'Sedan'),
         ('SUV', 'SUV'),
@@ -32,7 +32,6 @@ class CarModel(models.Model):
 
     def __str__(self):
         return self.name + " - " + self.car_make.name
-
 
 
 # <HINT> Create a Car Make model `class CarMake(models.Model)`:

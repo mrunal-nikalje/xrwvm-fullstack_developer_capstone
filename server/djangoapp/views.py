@@ -61,7 +61,7 @@ def logout_user(request):
 
 
 # -------------------------------
-# GET CARS 
+# GET CARS
 # -------------------------------
 def get_cars(request):
 
@@ -83,7 +83,7 @@ def get_cars(request):
 
 
 # -------------------------------
-# GET DEALERS 
+# GET DEALERS
 # -------------------------------
 def get_dealerships(request, state="All"):
 
@@ -128,7 +128,8 @@ def get_dealer_reviews(request, dealer_id):
             review["sentiment"] = "neutral"   # default value
 
             try:
-                sentiment_response = analyze_review_sentiments(review.get("review", ""))
+                sentiment_response = analyze_review_sentiments(
+                    review.get("review", ""))
 
                 if sentiment_response and "sentiment" in sentiment_response:
                     review["sentiment"] = sentiment_response["sentiment"]
@@ -141,20 +142,22 @@ def get_dealer_reviews(request, dealer_id):
         "status": 200,
         "reviews": reviews
     })
-    
+
 # -------------------------------
 # ADD REVIEW (POST)
 # -------------------------------
+
+
 @csrf_exempt
 def add_review(request):
 
-    if request.user.is_anonymous == False:
+    if not request.user.is_anonymous:
 
         if request.method == "POST":
             try:
                 data = json.loads(request.body)
 
-                response = post_review(data)
+                post_review(data)
 
                 return JsonResponse({
                     "status": 200,
