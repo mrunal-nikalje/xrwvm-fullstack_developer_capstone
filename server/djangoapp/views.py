@@ -61,7 +61,7 @@ def logout_user(request):
 
 
 # -------------------------------
-# GET CARS (Lab 3)
+# GET CARS 
 # -------------------------------
 def get_cars(request):
 
@@ -83,7 +83,7 @@ def get_cars(request):
 
 
 # -------------------------------
-# GET DEALERS (Lab 4)
+# GET DEALERS 
 # -------------------------------
 def get_dealerships(request, state="All"):
 
@@ -122,21 +122,26 @@ def get_dealer_reviews(request, dealer_id):
     endpoint = "/fetchReviews/dealer/" + str(dealer_id)
     reviews = get_request(endpoint)
 
-    # Add sentiment to each review
+    # Add sentiment safely
     if reviews:
         for review in reviews:
+            review["sentiment"] = "neutral"   # default value
+
             try:
                 sentiment_response = analyze_review_sentiments(review.get("review", ""))
-                review["sentiment"] = sentiment_response.get("sentiment", "neutral")
-            except:
+
+                if sentiment_response and "sentiment" in sentiment_response:
+                    review["sentiment"] = sentiment_response["sentiment"]
+
+            except Exception as e:
+                print("Sentiment error:", e)
                 review["sentiment"] = "neutral"
 
     return JsonResponse({
         "status": 200,
         "reviews": reviews
     })
-
-
+    
 # -------------------------------
 # ADD REVIEW (POST)
 # -------------------------------
